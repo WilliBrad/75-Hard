@@ -210,6 +210,12 @@ export default function DashboardPage() {
     return missing
   }
 
+  function getOrderedMembers() {
+    const mine = members.filter((member) => member.id === profile?.id)
+    const others = members.filter((member) => member.id !== profile?.id)
+    return [...mine, ...others]
+  }
+
   if (isLoading) {
     return (
       <section className="card auth-card">
@@ -283,7 +289,7 @@ export default function DashboardPage() {
       </section>
 
       <section className="dashboard-member-grid">
-        {members.map((member) => {
+        {getOrderedMembers().map((member) => {
           const userEntries = getEntriesForUser(member.id)
           const todayEntry = getTodayEntryForUser(member.id)
           const percent = getCompletionPercent(todayEntry)
